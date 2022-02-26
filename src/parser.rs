@@ -32,10 +32,9 @@ impl<'a> Parser<'a> {
                           short_name: Option<char>, 
                           data: &'a mut bool
     ) -> &mut Self {
-        let long_name = if long_name.is_some() {
-            Some(long_name.unwrap().to_string())
-        } else {
-            None
+        let long_name = match long_name {
+            Some(s) => Some(s.to_string()),
+            None => None,
         };
 
         self.opts.push(Opt { 
@@ -51,10 +50,9 @@ impl<'a> Parser<'a> {
                           short_name: Option<char>, 
                           data: &'a mut String
     ) -> &mut Self {
-        let long_name = if long_name.is_some() {
-            Some(long_name.unwrap().to_string())
-        } else {
-            None
+        let long_name = match long_name {
+            Some(s) => Some(s.to_string()),
+            None => None,
         };
 
         self.opts.push(Opt { 
