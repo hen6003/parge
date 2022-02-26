@@ -8,12 +8,18 @@ Parge is a simple and easy to use argument parser
 ## Switch options
 Options that are a simple on/off switch
 
-`example --option`
+Styles supported:
+* `example --option`
+* `example -o`
 
 ## Value options
 Options that contain some data
 
-`example --hello world`
+Styles supported:
+* `example --hello=world`
+* `example --hello world`
+* `example -hworld`
+* `example -h world`
 
 # Usage
 

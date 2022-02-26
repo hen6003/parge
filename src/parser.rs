@@ -78,21 +78,28 @@ impl<'a> Parser<'a> {
                     } else if a.starts_with("--") {
                         // Long options
                         let a = a.chars().skip(2).collect::<String>();
+                        let a: Vec<&str> = a.splitn(2, "=").collect();
                         let mut matched = false;
 
                         for i in &mut self.opts {
-                            if i.long_name.is_some() && a == *i.long_name.as_ref().unwrap() {
+                            if i.long_name.is_some() && a[0] == *i.long_name.as_ref().unwrap() {
                                 matched = true;
 
                                 match &mut i.opt_type {
                                     OptTypes::Switch(d) => **d = true,
-                                    OptTypes::Value(d) => **d = args_iter.next().unwrap().to_string(),
+                                    OptTypes::Value(d) => {
+                                        **d = if a.len() > 1 {
+                                            a[1].to_string()
+                                        } else {
+                                            args_iter.next().unwrap().to_string()
+                                        };
+                                    },
                                 }
                             }
                         }
 
                         if !matched {
-                            return Err(ParserError::UnknownOption(a))
+                            return Err(ParserError::UnknownOption(a[0].to_string()))
                         }
                     } else if a.starts_with("-") {
                         // Short options

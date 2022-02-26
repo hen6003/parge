@@ -19,16 +19,22 @@ fn long_switch_opt() {
 fn long_value_opt() {
     use crate::parser::*;
 
-    let mut test = String::new();
+    let mut test1 = String::new();
+    let mut test2 = String::new();
 
     Parser::new()
         .add_value_opt(
             Some("hello"),
             None,
-            &mut test)
-        .parse_with(vec!["--hello".to_string(), "world".to_string()]).unwrap();
+            &mut test1)
+        .add_value_opt(
+            Some("test"),
+            None,
+            &mut test2)
+        .parse_with(vec!["--hello".to_string(), "world".to_string(), "--test=world".to_string()]).unwrap();
 
-    assert_eq!(test, "world");
+    assert_eq!(test1, "world");
+    assert_eq!(test2, "world");
 }
 
 #[test]
